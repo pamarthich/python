@@ -1,0 +1,96 @@
+import boto
+import boto3
+import boto.ec2
+import boto.ec2.elb
+#from credentials import *
+access = input("Enter access_key_id: ")
+secret = input("Enter secret_access_key_id: ")
+region = input("Enter the region: ")
+conn = boto.connect_ec2(aws_access_key_id=access,aws_secret_access_key=secret)
+reg = boto.ec2.connect_to_region(region)
+
+session = boto3.Session(region_name=region)
+ec2 = session.resource('ec2')
+ec2_client = session.client('ec2')
+s3 = boto3.client('s3')
+ec2_ip = boto3.client('ec2')
+ec2_rds = boto3.client('rds')
+def running():
+    print("The Running instances are")
+    rinstances = ec2.instances.filter(
+        Filters=[{'Name': 'instance-state-name', 'Values': ['running']}])
+    for instance in rinstances:
+        print(instance.id, instance.instance_type, instance.tags)
+def stopped():
+    print("The Stopped instances are")
+    sinstances = ec2.instances.filter(
+        Filters=[{'Name': 'instance-state-name', 'Values': ['stopped']}])
+    for instance1 in sinstances:
+        print(instance1.tags, instance1.id, instance1.instance_type)
+def volumes():
+    vol = reg.get_all_volumes()
+    for v in vol:
+        print(v.tags, v.id, v.status, v.type,)
+#session = boto3.Session(region_name="ap-south-1")
+
+def snapshots():
+    snapshot = ec2_client.describe_snapshots(OwnerIds=['self'])
+    for snap in snapshot["Snapshots"]:
+        print(snap["SnapshotId"], snap["Description"])
+def s3storage():
+    buck = s3.list_buckets()
+    buckets = [bucket['Name'] for bucket in buck['Buckets']]
+    print("Bucket List: %s " % buckets)
+def elasticIP():
+    res_ip= ec2_ip.describe_addresses()
+    for elastic in res_ip['Addresses']:
+        print(elastic["PublicIp"])
+def VPClist():
+    ec2_ip = boto3.client('ec2')
+    res_vpc = ec2_ip.describe_vpcs()
+    for vpcnum in res_vpc["Vpcs"]:
+        print(vpcnum["VpcId"])
+def AMIlist():
+    resp_ami = ec2_ip.describe_images(Owners=['self'])
+    for ami in resp_ami['Images']:
+        print(ami['ImageId'], ami['Name'])   # Or whatever you wish to do
+def load():
+    conn_elb = boto.connect_elb()
+    load = conn_elb.get_all_load_balancers()
+    print(load)
+def RDinstance():
+    res = ec2_rds.describe_db_instances()
+    for dbins in res['DBInstances']:
+        print(dbins["DBInstanceIdentifier"])
+
+print("1. List of stopped Instances")
+print("2. List of Running Instances")
+print("3. List of volumes ")
+print("4. List of snapshots")
+print("5. List of Buckets")
+print("6. List of Elastic IPs")
+print("7. List of Vpcs")
+print("8. List of Amis")
+print("9. List of LoadBalancer")
+print("10. List of RDB instances")
+input = int(input("enter the number of your choice:"))
+if input == 1:
+    stopped()
+elif input == 2:
+    running()
+elif input == 3:
+    volumes()
+elif input == 4:
+    snapshots()
+elif input == 5:
+    s3storage()
+elif input == 6:
+    elasticIP()
+elif input == 7:
+    VPClist()
+elif input == 8:
+    AMIlist()
+elif input == 9:
+    load()
+elif input == 10:
+    RDinstance()
