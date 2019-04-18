@@ -1,5 +1,5 @@
 parameter {
-    name  = "slow_query_logs"
+    name  = "slow_query_log"
     value = "1"
   }
 
