@@ -2,17 +2,17 @@ This repository contains Python scripts for AWS Automation. Scripts which are te
 
 Config Settings:
 
-\# ` tiller -listen=localhost:8080`  --> Set this if tiller running on localhost
+\#` tiller -listen=localhost:8080`  --> Set this if tiller running on localhost
 
-\# `export HELM_HOST=:8080`
+\#`export HELM_HOST=:8080`
 
-\# `export TF_LOG=TRACE`  --> For terraform Debug log
+\#`export TF_LOG=TRACE`  --> For terraform Debug log
 
-\# `export TF_LOG_PATH=./terraform.log`  --> To set terraform Logfile path
+\#`export TF_LOG_PATH=./terraform.log`  --> To set terraform Logfile path
 
 Create a Cluster Role Binding:
 
-\# ` kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:anonymous `
+\#` kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:anonymous `
 
 Get your jenkins 'admin' user password by running:
 ```
