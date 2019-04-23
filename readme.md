@@ -1,16 +1,16 @@
 This repository contains Python scripts for AWS Automation. Scripts which are tested and were approved to use in production will be tagged with a comment in start of each script....
 
-Config Settings:
+**config settings:**
 
-\#`tiller -listen=localhost:8080`  --> Set this if tiller running on localhost
+\#`tiller -listen=localhost:8080`  --> set this if tiller running on localhost
 
 \#`export HELM_HOST=:8080`
 
-\#`export TF_LOG=TRACE`  --> For terraform Debug log
+\#`export TF_LOG=TRACE`  --> for terraform debug log
 
-\#`export TF_LOG_PATH=./terraform.log`  --> To set terraform Logfile path
+\#`export TF_LOG_PATH=./terraform.log`  --> to set terraform logfile path
 
-Create a Cluster Role Binding:
+create a cluster role binding:
 
 \#`kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:anonymous `
 
